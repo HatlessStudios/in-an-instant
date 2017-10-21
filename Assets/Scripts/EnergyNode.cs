@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 public class EnergyNode : MonoBehaviour {
-    public const double STRENGTH = 1e-2;
+    public const double STRENGTH = 1;
 
     public float gravity
     {
@@ -27,6 +27,7 @@ public class EnergyNode : MonoBehaviour {
         get { return _radius; }
         set { _radius = value; }
     }
+    public Behaviour halo { get; private set; }
 
     [SerializeField]
     private float _gravity;
@@ -37,17 +38,21 @@ public class EnergyNode : MonoBehaviour {
     [SerializeField]
     private float _radius;
 
+    private NodeBuilder parent;
     private Rigidbody body;
 
     private void Start()
     {
+        parent = GetComponentInParent<NodeBuilder>();
         body = GetComponent<Rigidbody>();
+        halo = (Behaviour) GetComponent("Halo");
     }
 
     void Update()
     {
+        if (parent.paused) return;
         EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
-        double timeFlow = GetTimeFlow(nodes);
+        double timeFlow = GetTimeFlow(nodes) * Time.deltaTime;
         foreach (EnergyNode node in nodes.Where(n => n.transform.position != transform.position))
         {
             double nodeTimeFlow = timeFlow * node.GetTimeFlow(nodes);
@@ -59,6 +64,11 @@ public class EnergyNode : MonoBehaviour {
             body.AddForce((float) (STRENGTH * _charge * node._charge) * path, ForceMode.Impulse);
         }
 	}
+
+    void OnMouseDown()
+    {
+        parent.selected = this;
+    }
 
     double GetTimeFlow(EnergyNode[] nodes)
     {
