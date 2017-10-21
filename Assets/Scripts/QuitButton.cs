@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class QuitButton : MonoBehaviour {
 	public Button button;
+	public AudioSource audio;
 
 	void Start()
 	{
@@ -14,6 +15,13 @@ public class QuitButton : MonoBehaviour {
 
 	void TaskOnClick()
 	{
+		StartCoroutine(playSoundThenQuit());
+	}
+
+	IEnumerator playSoundThenQuit()
+	{
+		audio.Play();
+		yield return new WaitForSeconds(audio.clip.length - 0.3f);
 		Application.Quit ();
 	}
 }

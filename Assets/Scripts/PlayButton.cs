@@ -5,15 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class PlayButton : MonoBehaviour {
 	public Button button;
+	public AudioSource audio;
 
 	void Start()
 	{
 		Button btn = button.GetComponent<Button>();
 		btn.onClick.AddListener(TaskOnClick);
 	}
-
+		
 	void TaskOnClick()
 	{
-		SceneManager.LoadScene("Level");
+		StartCoroutine(playSoundThenLoad());
+	}
+
+	IEnumerator playSoundThenLoad()
+	{
+		audio.Play();
+		yield return new WaitForSeconds(audio.clip.length - 0.3f);
+		Application.LoadLevel("Level");
 	}
 }
