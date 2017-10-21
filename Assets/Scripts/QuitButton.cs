@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class PlayButton : MonoBehaviour {
+public class QuitButton : MonoBehaviour {
 	public Button button;
 
 	void Start()
@@ -14,6 +14,6 @@ public class PlayButton : MonoBehaviour {
 
 	void TaskOnClick()
 	{
-		SceneManager.LoadScene("Level");
+		Application.Quit ();
 	}
 }
