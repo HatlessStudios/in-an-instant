@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class EnergyNode : MonoBehaviour {
-    public const double G = 6.67E-11;
-    public const double COULOMB = 8.99e9;
+    public const double STRENGTH = 1e-2;
 
     public float gravity
     {
@@ -46,21 +46,22 @@ public class EnergyNode : MonoBehaviour {
 
     void Update()
     {
-        EnergyNode[] nodes = GetComponentsInChildren<EnergyNode>();
+        EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
         double timeFlow = GetTimeFlow(nodes);
         foreach (EnergyNode node in nodes.Where(n => n.transform.position != transform.position))
         {
             double nodeTimeFlow = timeFlow * node.GetTimeFlow(nodes);
             if (nodeTimeFlow == 0) continue;
             Vector3 path = node.transform.position - transform.position;
+            if (path.magnitude > node._radius) continue;
             path /= path.sqrMagnitude;
-            body.AddForce((float) (G * _gravity * node._gravity) * path, ForceMode.Impulse);
-            body.AddForce((float) (COULOMB * _charge * node._charge) * path, ForceMode.Impulse);
+            body.AddForce((float) (STRENGTH * _gravity * node._gravity) * path, ForceMode.Impulse);
+            body.AddForce((float) (STRENGTH * _charge * node._charge) * path, ForceMode.Impulse);
         }
 	}
 
     double GetTimeFlow(EnergyNode[] nodes)
     {
-        return nodes.Where(n => n.radius < (n.transform.position - transform.position).magnitude).Sum(n => n._time);
+        return nodes.Where(n => n.radius >= (n.transform.position - transform.position).magnitude).Sum(n => n._time);
     }
 }
