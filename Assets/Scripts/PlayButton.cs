@@ -4,16 +4,13 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class PlayButton : MonoBehaviour {
-	public Button button;
-
 	void Start()
 	{
-		Button btn = button.GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
-	}
+        GetComponent<Button>().onClick.AddListener(TaskOnClick);
+    }
 
-	void TaskOnClick()
-	{
-		SceneManager.LoadScene("Level");
-	}
+    void TaskOnClick()
+    {
+        SceneManager.LoadScene("Level");
+    }
 }
