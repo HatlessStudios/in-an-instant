@@ -24,7 +24,7 @@ public class NodeBuilder : MonoBehaviour {
     }
 
     private EnergyNode _selected;
-    private NodeType _selectedType = NodeType.GRAVITY_NEGATIVE;
+    private NodeType _selectedType = NodeType.NONE;
     private bool _paused;
 
     public void SetSelectedType(string type)
@@ -36,7 +36,7 @@ public class NodeBuilder : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
         {
             if (_selectedType == NodeType.NONE) return;
             paused = true;
