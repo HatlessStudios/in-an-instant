@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -6,7 +7,11 @@ using UnityEditor;
 public class NodeBuilder : MonoBehaviour {
     private const string ENERGY_NODE_PREFAB = "Prefabs/EnergyNode";
 
-    public bool paused { get; private set; }
+    public bool paused
+    {
+        get { return _paused; }
+        set { _paused = value; Time.timeScale = value ? 0 : 1; }
+    }
     public EnergyNode selected
     {
         get { return _selected; }
@@ -20,6 +25,14 @@ public class NodeBuilder : MonoBehaviour {
 
     private EnergyNode _selected;
     private NodeType _selectedType = NodeType.GRAVITY_NEGATIVE;
+    private bool _paused;
+
+    public void SetSelectedType(string type)
+    {
+        Debug.Log("Set type to: " + type);
+        selectedType = (NodeType) Enum.Parse(typeof(NodeType), type);
+        Debug.Log("New selected type: " + selectedType);
+    }
 
     void Update()
     {
@@ -30,6 +43,10 @@ public class NodeBuilder : MonoBehaviour {
             EnergyNode node = Instantiate(Resources.Load<GameObject>(ENERGY_NODE_PREFAB), GetTargetedPoint(Input.mousePosition), Quaternion.identity).GetComponent<EnergyNode>();
             node.transform.parent = transform;
             node.GetComponent<Renderer>().material = GetMaterial(_selectedType);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            paused = false;
         }
     }
 
