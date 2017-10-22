@@ -35,6 +35,8 @@ public class NodeBuilder : MonoBehaviour {
     protected bool _paused;
     protected bool selectionUpdated;
     protected EnergyNode created;
+    protected bool scroll;
+    protected Vector3 lastMousePosition;
 
     public void SetSelectedType(string type)
     {
@@ -68,6 +70,8 @@ public class NodeBuilder : MonoBehaviour {
             if (_selectedType == NodeType.NONE)
             {
                 if (!selectionUpdated) selected = null;
+                scroll = true;
+                lastMousePosition = GetTargetedPoint(Input.mousePosition);
                 selectionUpdated = false;
                 return;
             }
@@ -78,35 +82,50 @@ public class NodeBuilder : MonoBehaviour {
             node.lockPosition = _lockCreated;
             created = node;
         }
-        else if (Input.GetMouseButtonUp(0) && created != null)
+        else if (Input.GetMouseButtonUp(0))
         {
-            paused = false;
-            switch (selectedType)
+            if (created != null)
             {
-                case NodeType.GRAVITY_POSITIVE:
-                    created.gravity = 1 / created.radius;
-                    break;
-                case NodeType.GRAVITY_NEGATIVE:
-                    created.gravity = -1 / created.radius;
-                    break;
-                case NodeType.CHARGE_POSITIVE:
-                    created.charge = 1 / created.radius;
-                    break;
-                case NodeType.CHARGE_NEGATIVE:
-                    created.charge = -1 / created.radius;
-                    break;
-                case NodeType.TIME_POSITIVE:
-                    created.time = 1 / created.radius;
-                    break;
-                case NodeType.TIME_NEGATIVE:
-                    created.time = -1 / created.radius;
-                    break;
+                paused = false;
+                switch (selectedType)
+                {
+                    case NodeType.GRAVITY_POSITIVE:
+                        created.gravity = 1 / created.radius;
+                        break;
+                    case NodeType.GRAVITY_NEGATIVE:
+                        created.gravity = -1 / created.radius;
+                        break;
+                    case NodeType.CHARGE_POSITIVE:
+                        created.charge = 1 / created.radius;
+                        break;
+                    case NodeType.CHARGE_NEGATIVE:
+                        created.charge = -1 / created.radius;
+                        break;
+                    case NodeType.TIME_POSITIVE:
+                        created.time = 1 / created.radius;
+                        break;
+                    case NodeType.TIME_NEGATIVE:
+                        created.time = -1 / created.radius;
+                        break;
+                }
+                created = null;
             }
-            created = null;
+            else if (scroll)
+            {
+                scroll = false;
+            }
         }
-        else if (Input.GetMouseButton(0) && created != null)
+        else if (Input.GetMouseButton(0))
         {
-            created.radius = Math.Max(1, (created.transform.position - GetTargetedPoint(Input.mousePosition)).magnitude);
+            if (created != null)
+            {
+                created.radius = Math.Max(1, (created.transform.position - GetTargetedPoint(Input.mousePosition)).magnitude);
+            }
+            else if (scroll)
+            {
+                Vector3 current = GetTargetedPoint(Input.mousePosition);
+                Camera.main.transform.position -= current - lastMousePosition;
+            }
         }
         selectionUpdated = false;
     }
