@@ -9,7 +9,7 @@ public class PlayButton : MonoBehaviour {
 
 	void Start()
 	{
-		Button btn = button.GetComponent<Button>();
+		Button btn = GetComponent<Button>();
 		btn.onClick.AddListener(TaskOnClick);
 	}
 		
