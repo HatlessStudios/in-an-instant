@@ -48,7 +48,7 @@ public class NodeBuilder : MonoBehaviour {
 
     public void DeleteSelected()
     {
-        Destroy(_selected);
+        Destroy(_selected.gameObject);
         _selected = null;
     }
 
