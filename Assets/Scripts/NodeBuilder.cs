@@ -128,6 +128,15 @@ public class NodeBuilder : MonoBehaviour {
             }
         }
         selectionUpdated = false;
+        HandleInput();
+    }
+
+    protected void HandleInput()
+    {
+        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            Camera.main.orthographicSize = Math.Max(5, Camera.main.orthographicSize - 5 * Input.GetAxis("Mouse ScrollWheel"));
+        }
     }
 
     Material GetMaterial(NodeType type)

@@ -55,6 +55,8 @@ class SandboxNodeBuilder : NodeBuilder
         else
         {
             base.Update();
+            return;
         }
+        HandleInput();
     }
 }
