@@ -4,14 +4,12 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class MainMenuButton : MonoBehaviour {
-
-	public Button button;
-	public AudioSource audio;
+	private AudioSource audioSource;
 
 	void Start()
 	{
-		Button btn = GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
+		GetComponent<Button>().onClick.AddListener(TaskOnClick);
+        audioSource = GetComponent<AudioSource>();
 	}
 
 	void TaskOnClick()
@@ -21,8 +19,8 @@ public class MainMenuButton : MonoBehaviour {
 
 	IEnumerator playSoundThenLoad()
 	{
-		audio.Play();
-		yield return new WaitForSeconds(audio.clip.length - 0.3f);
+		audioSource.Play();
+		yield return new WaitForSeconds(audioSource.clip.length - 0.3f);
 		SceneManager.LoadScene("Menu");
 	}
 }

@@ -4,28 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LevelSelectButton : MonoBehaviour {
+public class LevelSelectButton : MonoBehaviour
+{
+	public string linkedLevel;
 
-	[SerializeField]
-	private string linkedLevel;
-
-	public AudioSource audio;
+	public AudioSource audioSource;
 
 	// Use this for initialization
-	void Start () {
+	void Start()
+    {
         GetComponent<Button>().onClick.AddListener(OnButtonClick);
 	}
 	
 	// Update is called once per frame
-	void OnButtonClick ()
+	void OnButtonClick()
     {
-		StartCoroutine(playSoundThenLoad());
+		StartCoroutine(PlaySoundThenLoad());
     }
 
-	IEnumerator playSoundThenLoad()
+	IEnumerator PlaySoundThenLoad()
 	{
-		audio.Play();
-		yield return new WaitForSeconds(audio.clip.length - 0.3f);
+		audioSource.Play();
+		yield return new WaitForSeconds(audioSource.clip.length - 0.3f);
 		SceneManager.LoadScene("Level" + linkedLevel);
 	}
 }

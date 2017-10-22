@@ -4,24 +4,23 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class QuitButton : MonoBehaviour {
-	public Button button;
-	public AudioSource audio;
+	private AudioSource audioSource;
 
 	void Start()
 	{
-		Button btn = GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
+		GetComponent<Button>().onClick.AddListener(TaskOnClick);
+        audioSource = GetComponent<AudioSource>();
 	}
 
 	void TaskOnClick()
 	{
-		StartCoroutine(playSoundThenQuit());
+		StartCoroutine(PlaySoundThenQuit());
 	}
 
-	IEnumerator playSoundThenQuit()
+	IEnumerator PlaySoundThenQuit()
 	{
-		audio.Play();
-		yield return new WaitForSeconds(audio.clip.length - 0.3f);
+		audioSource.Play();
+		yield return new WaitForSeconds(audioSource.clip.length - 0.3f);
 		Application.Quit ();
 	}
 }

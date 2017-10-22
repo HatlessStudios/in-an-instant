@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class ClearButton : MonoBehaviour
 {
     public NodeBuilder nodeBuilder;
-
-	// Use this for initialization
+    
 	void Start()
     {
         GetComponent<Button>().onClick.AddListener(OnButtonClick);

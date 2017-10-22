@@ -4,25 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LevelSelectButtonSandbox : MonoBehaviour {
-
-	public AudioSource audio;
-
-	// Use this for initialization
+public class LevelSelectButtonSandbox : MonoBehaviour
+{
+	public AudioSource audioSource;
+    
 	void Start () {
         GetComponent<Button>().onClick.AddListener(OnButtonClick);
 	}
 	
-	// Update is called once per frame
 	void OnButtonClick ()
     {
-		StartCoroutine(playSoundThenLoad());
+		StartCoroutine(PlaySoundThenLoad());
     }
 
-	IEnumerator playSoundThenLoad()
+	IEnumerator PlaySoundThenLoad()
 	{
-		audio.Play();
-		yield return new WaitForSeconds(audio.clip.length - 0.3f);
+		audioSource.Play();
+		yield return new WaitForSeconds(audioSource.clip.length - 0.3f);
 		SceneManager.LoadScene("Sandbox");
 	}
 }
