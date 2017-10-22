@@ -836,7 +836,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1480049825}
         m_MethodName: SetSelectedType
         m_Mode: 5
         m_Arguments:
@@ -847,7 +847,7 @@ MonoBehaviour:
           m_StringArgument: CHARGE_NEGATIVE
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 240802540}
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -4010,7 +4010,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1480049825}
         m_MethodName: SetSelectedType
         m_Mode: 5
         m_Arguments:
@@ -4021,7 +4021,7 @@ MonoBehaviour:
           m_StringArgument: CHARGE_POSITIVE
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 240802540}
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
