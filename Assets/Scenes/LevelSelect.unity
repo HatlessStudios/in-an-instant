@@ -2451,6 +2451,7 @@ GameObject:
   - component: {fileID: 1382298492}
   - component: {fileID: 1382298491}
   - component: {fileID: 1382298489}
+  - component: {fileID: 1382298490}
   m_Layer: 5
   m_Name: LevelButton5
   m_TagString: Untagged
@@ -2557,6 +2558,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1382298490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1382298487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ce03d09ebd64f989abbef76fad52cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linkedLevel: 5
+  audio: {fileID: 1382298489}
 --- !u!114 &1382298491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2857,8 +2871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a799db5071ef046aab2dd29cf3259db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linkedLevel: 
-  audio: {fileID: 0}
+  audio: {fileID: 1386497925}
 --- !u!1 &1545593634
 GameObject:
   m_ObjectHideFlags: 0
