@@ -29,40 +29,45 @@ public class NodeBuilder : MonoBehaviour {
     }
 
     [SerializeField]
-    private bool _lockCreated;
-    private EnergyNode _selected;
-    private NodeType _selectedType = NodeType.NONE;
-    private bool _paused;
-    private bool selectionUpdated;
-    private EnergyNode created;
+    protected bool _lockCreated;
+    protected EnergyNode _selected;
+    protected NodeType _selectedType = NodeType.NONE;
+    protected bool _paused;
+    protected bool selectionUpdated;
+    protected EnergyNode created;
 
     public void SetSelectedType(string type)
     {
         selectedType = (NodeType) Enum.Parse(typeof(NodeType), type);
     }
 
-    public void LockSelected()
+    protected void ChangeSelected(EnergyNode selected)
     {
-        _selected.lockPosition = !_selected.lockPosition;
+        if (_selected != null) _selected.halo.enabled = false;
+        _selected = selected;
+        if (_selected != null) _selected.halo.enabled = true;
+        selectionUpdated = true;
     }
 
-    public void DeleteSelected()
+    protected Vector3 GetTargetedPoint(Vector3 mouse)
     {
+<<<<<<< HEAD
+        mouse = Camera.main.ScreenToWorldPoint(mouse);
+        return new Vector3(mouse.x, mouse.y, 0);
+=======
         Destroy(_selected.gameObject);
         _selected = null;
+>>>>>>> ce3fe157dca6ffdb628d04d6d348d73b22e8e869
     }
 
-    void Update()
+    protected void Update()
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
         {
-            if (_selectedType == NodeType.NONE)
+            if (_selected != null && !selectionUpdated)
             {
-                if (!selectionUpdated)
-                {
-                    selected = null;
-                    selectionUpdated = false;
-                }
+                selected = null;
+                selectionUpdated = false;
                 return;
             }
             paused = true;
@@ -105,14 +110,6 @@ public class NodeBuilder : MonoBehaviour {
         selectionUpdated = false;
     }
 
-    void ChangeSelected(EnergyNode selected)
-    {
-        if (_selected != null) _selected.halo.enabled = false;
-        _selected = selected;
-        if (_selected != null) _selected.halo.enabled = true;
-        selectionUpdated = true;
-    }
-
     Material GetMaterial(NodeType type)
     {
         switch (type)
@@ -131,12 +128,6 @@ public class NodeBuilder : MonoBehaviour {
                 return Resources.Load<Material>("Materials/Nodes/TimeBackNode");
         }
         return null;
-    }
-
-    Vector3 GetTargetedPoint(Vector3 mouse)
-    {
-        mouse = Camera.main.ScreenToWorldPoint(mouse);
-        return new Vector3(mouse.x, mouse.y, 0);
     }
 
     public enum NodeType
