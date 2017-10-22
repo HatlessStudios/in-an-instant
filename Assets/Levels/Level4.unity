@@ -161,7 +161,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c4bbba01099433d489143159364acc78, type: 2}
+      objectReference: {fileID: 2100000, guid: 2f125694a5e784fef962b32a096edbc6, type: 2}
     - target: {fileID: 4209312701049774, guid: 4a3813c57b6019d4da3d073e2b6e1f24, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
@@ -192,6 +192,11 @@ Prefab:
         type: 2}
       propertyPath: _radius
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 54829872091778924, guid: 4a3813c57b6019d4da3d073e2b6e1f24,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a3813c57b6019d4da3d073e2b6e1f24, type: 2}
