@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 public class EnergyNode : MonoBehaviour {
-    public const double STRENGTH = 100;
+    public const double STRENGTH = 10;
 
     public float gravity
     {
@@ -27,6 +27,11 @@ public class EnergyNode : MonoBehaviour {
         get { return _radius; }
         set { _radius = value; circle.radius = value; }
     }
+    public bool lockPosition
+    {
+        get { return _lockPosition; }
+        set { _lockPosition = value; }
+    }
     public Behaviour halo { get; private set; }
     public DrawCircle circle { get; private set; }
 
@@ -38,6 +43,8 @@ public class EnergyNode : MonoBehaviour {
     private float _time;
     [SerializeField]
     private float _radius;
+    [SerializeField]
+    private bool _lockPosition;
 
     private NodeBuilder parent;
     private Rigidbody body;
