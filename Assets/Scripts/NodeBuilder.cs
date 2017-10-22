@@ -37,6 +37,7 @@ public class NodeBuilder : MonoBehaviour {
     protected EnergyNode created;
     protected bool scroll;
     protected Vector3 lastMousePosition;
+    protected bool lastPaused;
 
     public void SetSelectedType(string type)
     {
@@ -47,6 +48,11 @@ public class NodeBuilder : MonoBehaviour {
         if (_selected == null) return;
         Destroy(_selected.gameObject);
         _selected = null;
+    }
+
+    public void TogglePaused()
+    {
+        paused = !paused;
     }
 
     protected void ChangeSelected(EnergyNode selected)
@@ -75,6 +81,7 @@ public class NodeBuilder : MonoBehaviour {
                 selectionUpdated = false;
                 return;
             }
+            lastPaused = paused;
             paused = true;
             EnergyNode node = Instantiate(Resources.Load<GameObject>(ENERGY_NODE_PREFAB), GetTargetedPoint(Input.mousePosition), Quaternion.identity).GetComponent<EnergyNode>();
             node.transform.parent = transform;
@@ -86,7 +93,7 @@ public class NodeBuilder : MonoBehaviour {
         {
             if (created != null)
             {
-                paused = false;
+                paused = lastPaused;
                 switch (selectedType)
                 {
                     case NodeType.GRAVITY_POSITIVE:
