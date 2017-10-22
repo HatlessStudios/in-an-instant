@@ -17,7 +17,9 @@ public class EndTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		StartCoroutine(playSoundThenLoad());
+		if (other.gameObject.name == "Objective") {
+			StartCoroutine (playSoundThenLoad ());
+		}
 	}
 
 	IEnumerator playSoundThenLoad()
