@@ -70,13 +70,7 @@ public class EnergyNode : MonoBehaviour {
     {
         if (parent.paused || lockPosition) return;
         EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
-        Vector3 offset = body.velocity - multiplier * trueVelocity;
-        if (offset.magnitude >= 1)
-        {
-            Debug.Log("Playing collision sound effect");
-            collision.Play();
-        }
-        trueVelocity += offset;
+        trueVelocity += body.velocity - multiplier * trueVelocity;
         double rawTimeFlow = GetTimeFlow(nodes);
         double timeFlow = rawTimeFlow * Time.deltaTime;
         body.AddForce(-body.velocity, ForceMode.VelocityChange);
@@ -98,6 +92,12 @@ public class EnergyNode : MonoBehaviour {
     void OnMouseDown()
     {
         parent.selected = this;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision");
+        this.collision.Play();
     }
 
     double GetTimeFlow(EnergyNode[] nodes)
