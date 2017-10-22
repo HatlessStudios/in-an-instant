@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.0053152107, g: 0.005608376, b: 0.005314509, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2979,8 +2979,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f087b04323d6c4be9a65ead33a46d61a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1384014203}
-  audio: {fileID: 1384014202}
 --- !u!82 &1384014202
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3277,6 +3275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1480049826}
   - component: {fileID: 1480049825}
+  - component: {fileID: 1480049827}
   m_Layer: 0
   m_Name: Energy Nodes
   m_TagString: Untagged
@@ -3310,6 +3309,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1480049827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1480049824}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf0de23712c6b247b941eae648fdb6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lockCreated: 0
 --- !u!1 &1480435373
 GameObject:
   m_ObjectHideFlags: 0

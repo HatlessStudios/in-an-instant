@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.005348126, g: 0.005645819, b: 0.005347522, a: 1}
+  m_IndirectSpecularColor: {r: 0.0053152107, g: 0.005608376, b: 0.005314509, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1480049825}
         m_MethodName: SetSelectedType
         m_Mode: 5
         m_Arguments:
@@ -844,7 +844,7 @@ MonoBehaviour:
           m_StringArgument: CHARGE_NEGATIVE
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 240802540}
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -1869,7 +1869,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1480049825}
         m_MethodName: SetSelectedType
         m_Mode: 5
         m_Arguments:
@@ -1880,7 +1880,7 @@ MonoBehaviour:
           m_StringArgument: CHARGE_POSITIVE
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 240802540}
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -3070,8 +3070,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f087b04323d6c4be9a65ead33a46d61a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1435136825}
-  audio: {fileID: 1435136824}
 --- !u!82 &1435136824
 AudioSource:
   m_ObjectHideFlags: 0

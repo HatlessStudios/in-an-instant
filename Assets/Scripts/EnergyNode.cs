@@ -87,7 +87,7 @@ public class EnergyNode : MonoBehaviour {
             if (nodeTimeFlow == 0) continue;
             Vector3 path = node.transform.position - transform.position;
             if (path.magnitude > node._radius) continue;
-            path /= path.sqrMagnitude;
+            path /= Math.Max(1F, path.sqrMagnitude);
             bodySim.AddForce((float) (STRENGTH * _gravity * node._gravity) * path, ForceMode.Impulse);
             bodySim.AddForce((float) (-STRENGTH * _charge * node._charge) * path, ForceMode.Impulse);
         }
