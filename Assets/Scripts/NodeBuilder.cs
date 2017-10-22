@@ -12,12 +12,12 @@ public class NodeBuilder : MonoBehaviour {
         get { return _paused; }
         set { _paused = value; Time.timeScale = value ? 0 : 1; }
     }
-    public EnergyNode selected
+    public virtual EnergyNode selected
     {
         get { return _selected; }
         set { ChangeSelected(value); _selectedType = NodeType.NONE; }
     }
-    public NodeType selectedType
+    public virtual NodeType selectedType
     {
         get { return _selectedType; }
         set { _selectedType = value; ChangeSelected(null); }
@@ -40,6 +40,12 @@ public class NodeBuilder : MonoBehaviour {
     {
         selectedType = (NodeType) Enum.Parse(typeof(NodeType), type);
     }
+    public void DeleteSelected()
+    {
+        if (_selected == null) return;
+        Destroy(_selected.gameObject);
+        _selected = null;
+    }
 
     protected void ChangeSelected(EnergyNode selected)
     {
@@ -51,22 +57,17 @@ public class NodeBuilder : MonoBehaviour {
 
     protected Vector3 GetTargetedPoint(Vector3 mouse)
     {
-<<<<<<< HEAD
         mouse = Camera.main.ScreenToWorldPoint(mouse);
         return new Vector3(mouse.x, mouse.y, 0);
-=======
-        Destroy(_selected.gameObject);
-        _selected = null;
->>>>>>> ce3fe157dca6ffdb628d04d6d348d73b22e8e869
     }
 
     protected void Update()
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
         {
-            if (_selected != null && !selectionUpdated)
+            if (_selectedType == NodeType.NONE)
             {
-                selected = null;
+                if (!selectionUpdated) selected = null;
                 selectionUpdated = false;
                 return;
             }

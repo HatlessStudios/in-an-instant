@@ -14,12 +14,12 @@ class SandboxNodeBuilder : NodeBuilder
         get { return _selectedObstacle; }
         set { _selectedObstacle = value; ChangeSelected(null); _selectedType = NodeType.NONE; }
     }
-    public new EnergyNode selected
+    public override EnergyNode selected
     {
         get { return _selected; }
         set { ChangeSelected(value); _selectedType = NodeType.NONE; _selectedObstacle = false; }
     }
-    public new NodeType selectedType
+    public override NodeType selectedType
     {
         get { return _selectedType; }
         set { _selectedType = value; ChangeSelected(null); _selectedObstacle = false; }
@@ -30,18 +30,13 @@ class SandboxNodeBuilder : NodeBuilder
 
     public void LockSelected()
     {
+        if (_selected == null) return;
         _selected.lockPosition = !_selected.lockPosition;
-    }
-
-    public void DeleteSelected()
-    {
-        Destroy(_selected.gameObject);
-        _selected = null;
     }
 
     protected new void Update()
     {
-        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0) && _selectedObstacle)
+        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0) && _selectedObstacle && !selectionUpdated)
         {
             paused = true;
             Obstacle obstacle = Instantiate(Resources.Load<GameObject>(OBSTACLE_PREFAB), Vector3.zero, Quaternion.identity).GetComponent<Obstacle>();

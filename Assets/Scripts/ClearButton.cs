@@ -20,5 +20,9 @@ public class ClearButton : MonoBehaviour
         {
             Destroy(node.gameObject);
         }
+        foreach (Obstacle obstacle in nodeBuilder.GetComponentsInChildren<Obstacle>())
+        {
+            Destroy(obstacle.gameObject);
+        }
 	}
 }
