@@ -30,7 +30,7 @@ public class EnergyNode : MonoBehaviour {
     public bool lockPosition
     {
         get { return _lockPosition; }
-        set { _lockPosition = value; body.constraints = value ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.FreezeRotation; }
+        set { _lockPosition = value; if (body != null) body.constraints = value ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.FreezeRotation; }
     }
     public Behaviour halo { get; private set; }
     public DrawCircle circle { get; private set; }
@@ -58,6 +58,7 @@ public class EnergyNode : MonoBehaviour {
         halo = (Behaviour) GetComponent("Halo");
         circle = GetComponent<DrawCircle>();
         trueVelocity = body.velocity;
+        lockPosition = _lockPosition;
         bodySim = Instantiate(Resources.Load<GameObject>("Prefabs/PhysicsSim"), Vector3.zero, Quaternion.identity).GetComponent<Rigidbody>();
         bodySim.transform.parent = transform;
     }
