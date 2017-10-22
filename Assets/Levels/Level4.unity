@@ -150,7 +150,7 @@ Prefab:
     - target: {fileID: 114394222530672040, guid: 4a3813c57b6019d4da3d073e2b6e1f24,
         type: 2}
       propertyPath: _radius
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114394222530672040, guid: 4a3813c57b6019d4da3d073e2b6e1f24,
         type: 2}
@@ -191,12 +191,12 @@ Prefab:
     - target: {fileID: 114996388487685586, guid: 4a3813c57b6019d4da3d073e2b6e1f24,
         type: 2}
       propertyPath: _radius
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54829872091778924, guid: 4a3813c57b6019d4da3d073e2b6e1f24,
         type: 2}
       propertyPath: m_IsKinematic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a3813c57b6019d4da3d073e2b6e1f24, type: 2}
@@ -1451,7 +1451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.96850586, y: 0.040481485}
   m_AnchorMax: {x: 0.96850586, y: 0.040481485}
-  m_AnchoredPosition: {x: -19.89978, y: 3.7000122}
+  m_AnchoredPosition: {x: -19.899902, y: 3.7000122}
   m_SizeDelta: {x: 711.2, y: 313.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &519222706
@@ -2525,6 +2525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fba7cfc660f8f44bc77cc4d4b3ff16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lockCreated: 1
 --- !u!4 &1480049826
 Transform:
   m_ObjectHideFlags: 0
