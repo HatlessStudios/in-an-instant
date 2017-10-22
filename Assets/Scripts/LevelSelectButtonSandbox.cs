@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelectButtonSandbox : MonoBehaviour {
 
-	[SerializeField]
-	private string linkedLevel;
-
 	public AudioSource audio;
 
 	// Use this for initialization

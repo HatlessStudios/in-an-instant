@@ -34,6 +34,7 @@ public class EnergyNode : MonoBehaviour {
     }
     public Behaviour halo { get; private set; }
     public DrawCircle circle { get; private set; }
+    public AudioSource collision { get; private set; }
 
     [SerializeField]
     private float _gravity;
@@ -58,6 +59,7 @@ public class EnergyNode : MonoBehaviour {
         body = GetComponent<Rigidbody>();
         halo = (Behaviour) GetComponent("Halo");
         circle = GetComponent<DrawCircle>();
+        collision = GetComponent<AudioSource>();
         trueVelocity = body.velocity;
         lockPosition = _lockPosition;
         bodySim = Instantiate(Resources.Load<GameObject>("Prefabs/PhysicsSim"), Vector3.zero, Quaternion.identity).GetComponent<Rigidbody>();
@@ -68,7 +70,13 @@ public class EnergyNode : MonoBehaviour {
     {
         if (parent.paused || lockPosition) return;
         EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
-        trueVelocity += body.velocity - multiplier * trueVelocity;
+        Vector3 offset = body.velocity - multiplier * trueVelocity;
+        if (offset.magnitude >= 1)
+        {
+            Debug.Log("Playing collision sound effect");
+            collision.Play();
+        }
+        trueVelocity += offset;
         double rawTimeFlow = GetTimeFlow(nodes);
         double timeFlow = rawTimeFlow * Time.deltaTime;
         body.AddForce(-body.velocity, ForceMode.VelocityChange);
