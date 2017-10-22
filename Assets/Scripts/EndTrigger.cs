@@ -25,7 +25,7 @@ public class EndTrigger : MonoBehaviour {
 
 	IEnumerator playSoundThenLoad()
 	{
-		audio.volume = 1.5f
+		audio.volume = 1.5f;
 		audio.Play();
 		yield return new WaitForSeconds(audio.clip.length - 0.3f);
 		SceneManager.LoadScene ("LevelSelect");
