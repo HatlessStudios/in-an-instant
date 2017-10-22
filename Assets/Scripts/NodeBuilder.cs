@@ -41,12 +41,12 @@ public class NodeBuilder : MonoBehaviour {
         selectedType = (NodeType) Enum.Parse(typeof(NodeType), type);
     }
 
-    void LockSelected(bool value)
+    public void LockSelected(bool value)
     {
         _selected.lockPosition = value;
     }
 
-    void DeleteSelected()
+    public void DeleteSelected()
     {
         Destroy(_selected);
         _selected = null;
