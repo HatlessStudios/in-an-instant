@@ -49,6 +49,7 @@ public class EnergyNode : MonoBehaviour {
     private NodeBuilder parent;
     private Rigidbody body;
     private Vector3 trueVelocity;
+    private float multiplier;
     private Rigidbody bodySim;
 
     private void Start()
@@ -67,6 +68,7 @@ public class EnergyNode : MonoBehaviour {
     {
         if (parent.paused || lockPosition) return;
         EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
+        trueVelocity += body.velocity - multiplier * trueVelocity;
         double rawTimeFlow = GetTimeFlow(nodes);
         double timeFlow = rawTimeFlow * Time.deltaTime;
         body.AddForce(-body.velocity, ForceMode.VelocityChange);
@@ -82,9 +84,7 @@ public class EnergyNode : MonoBehaviour {
             bodySim.AddForce((float) (-STRENGTH * _charge * node._charge) * path, ForceMode.Impulse);
         }
         trueVelocity += bodySim.velocity;
-        body.AddForce((float) rawTimeFlow * trueVelocity, ForceMode.VelocityChange);
-        //body.AddForce(-trueVelocity, ForceMode.VelocityChange);
-        //if (((float) rawTimeFlow * trueVelocity).magnitude != 0F) Debug.Log("Time Flow: " + rawTimeFlow + " | Velocity: " + body.velocity);
+        body.AddForce((multiplier = (float) rawTimeFlow) * trueVelocity, ForceMode.VelocityChange);
     }
 
     void OnMouseDown()
