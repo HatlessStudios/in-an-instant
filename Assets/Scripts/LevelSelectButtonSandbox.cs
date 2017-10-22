@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelectButtonSandbox : MonoBehaviour {
 
-	[SerializeField]
-	private string linkedLevel;
-
 	public AudioSource audio;
 
 	// Use this for initialization
@@ -19,7 +16,7 @@ public class LevelSelectButtonSandbox : MonoBehaviour {
 	// Update is called once per frame
 	void OnButtonClick ()
     {
-		
+		StartCoroutine(playSoundThenLoad());
     }
 
 	IEnumerator playSoundThenLoad()

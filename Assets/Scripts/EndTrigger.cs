@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndTrigger : MonoBehaviour {
 
@@ -24,8 +25,9 @@ public class EndTrigger : MonoBehaviour {
 
 	IEnumerator playSoundThenLoad()
 	{
+		audio.volume = 1.5f
 		audio.Play();
 		yield return new WaitForSeconds(audio.clip.length - 0.3f);
-		Application.LoadLevel("LevelSelect");
+		SceneManager.LoadScene ("LevelSelect");
 	}
 }

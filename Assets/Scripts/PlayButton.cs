@@ -22,6 +22,6 @@ public class PlayButton : MonoBehaviour {
 	{
 		audio.Play();
 		yield return new WaitForSeconds(audio.clip.length - 0.3f);
-		Application.LoadLevel("LevelSelect");
+		SceneManager.LoadScene("LevelSelect");
 	}
 }
