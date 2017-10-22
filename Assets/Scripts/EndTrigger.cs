@@ -17,9 +17,13 @@ public class EndTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.name == "Objective") {
-			audio.Play ();
-			Debug.Log ("Where's the fucking sound?");
-		}
+		StartCoroutine(playSoundThenLoad());
+	}
+
+	IEnumerator playSoundThenLoad()
+	{
+		audio.Play();
+		yield return new WaitForSeconds(audio.clip.length - 0.3f);
+		Application.LoadLevel("LevelSelect");
 	}
 }
