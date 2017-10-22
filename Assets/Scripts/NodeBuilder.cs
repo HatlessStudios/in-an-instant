@@ -26,28 +26,64 @@ public class NodeBuilder : MonoBehaviour {
     private EnergyNode _selected;
     private NodeType _selectedType = NodeType.NONE;
     private bool _paused;
+    private bool selectionUpdated;
+    private EnergyNode created;
 
     public void SetSelectedType(string type)
     {
-        Debug.Log("Set type to: " + type);
         selectedType = (NodeType) Enum.Parse(typeof(NodeType), type);
-        Debug.Log("New selected type: " + selectedType);
     }
 
     void Update()
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
         {
-            if (_selectedType == NodeType.NONE) return;
+            if (_selectedType == NodeType.NONE)
+            {
+                if (!selectionUpdated)
+                {
+                    selected = null;
+                    selectionUpdated = false;
+                }
+                return;
+            }
             paused = true;
             EnergyNode node = Instantiate(Resources.Load<GameObject>(ENERGY_NODE_PREFAB), GetTargetedPoint(Input.mousePosition), Quaternion.identity).GetComponent<EnergyNode>();
             node.transform.parent = transform;
             node.GetComponent<Renderer>().material = GetMaterial(_selectedType);
+            created = node;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && created != null)
         {
             paused = false;
+            switch (selectedType)
+            {
+                case NodeType.GRAVITY_POSITIVE:
+                    created.gravity = 1 / created.radius;
+                    break;
+                case NodeType.GRAVITY_NEGATIVE:
+                    created.gravity = -1 / created.radius;
+                    break;
+                case NodeType.CHARGE_POSITIVE:
+                    created.charge = 1 / created.radius;
+                    break;
+                case NodeType.CHARGE_NEGATIVE:
+                    created.charge = -1 / created.radius;
+                    break;
+                case NodeType.TIME_POSITIVE:
+                    created.time = 1 / created.radius;
+                    break;
+                case NodeType.TIME_NEGATIVE:
+                    created.time = -1 / created.radius;
+                    break;
+            }
+            created = null;
         }
+        else if (Input.GetMouseButton(0) && created != null)
+        {
+            created.radius = Math.Max(1, (created.transform.position - GetTargetedPoint(Input.mousePosition)).magnitude);
+        }
+        selectionUpdated = false;
     }
 
     void ChangeSelected(EnergyNode selected)
@@ -55,6 +91,7 @@ public class NodeBuilder : MonoBehaviour {
         if (_selected != null) _selected.halo.enabled = false;
         _selected = selected;
         if (_selected != null) _selected.halo.enabled = true;
+        selectionUpdated = true;
     }
 
     Material GetMaterial(NodeType type)

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 public class EnergyNode : MonoBehaviour {
-    public const double STRENGTH = 1;
+    public const double STRENGTH = 100;
 
     public float gravity
     {
@@ -25,9 +25,10 @@ public class EnergyNode : MonoBehaviour {
     public float radius
     {
         get { return _radius; }
-        set { _radius = value; }
+        set { _radius = value; circle.radius = value; }
     }
     public Behaviour halo { get; private set; }
+    public DrawCircle circle { get; private set; }
 
     [SerializeField]
     private float _gravity;
@@ -40,12 +41,14 @@ public class EnergyNode : MonoBehaviour {
 
     private NodeBuilder parent;
     private Rigidbody body;
+    private Vector3 trueVelocity;
 
     private void Start()
     {
         parent = GetComponentInParent<NodeBuilder>();
         body = GetComponent<Rigidbody>();
         halo = (Behaviour) GetComponent("Halo");
+        circle = GetComponent<DrawCircle>();
     }
 
     void Update()
@@ -61,8 +64,11 @@ public class EnergyNode : MonoBehaviour {
             if (path.magnitude > node._radius) continue;
             path /= path.sqrMagnitude;
             body.AddForce((float) (STRENGTH * _gravity * node._gravity) * path, ForceMode.Impulse);
-            body.AddForce((float) (STRENGTH * _charge * node._charge) * path, ForceMode.Impulse);
+            body.AddForce((float) (-STRENGTH * _charge * node._charge) * path, ForceMode.Impulse);
         }
+        trueVelocity += body.velocity;
+        body.velocity = Vector3.zero;
+        transform.position += (float) timeFlow * trueVelocity;
 	}
 
     void OnMouseDown()
