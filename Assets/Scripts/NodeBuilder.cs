@@ -144,6 +144,38 @@ public class NodeBuilder : MonoBehaviour {
         {
             Camera.main.orthographicSize = Math.Max(5, Camera.main.orthographicSize - 5 * Input.GetAxis("Mouse ScrollWheel"));
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            selectedType = NodeType.GRAVITY_POSITIVE;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            selectedType = NodeType.GRAVITY_NEGATIVE;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            selectedType = NodeType.CHARGE_NEGATIVE;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            selectedType = NodeType.CHARGE_POSITIVE;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            selectedType = NodeType.TIME_POSITIVE;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            selectedType = NodeType.TIME_NEGATIVE;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TogglePaused();
+        }
+        if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+        {
+            DeleteSelected();
+        }
     }
 
     Material GetMaterial(NodeType type)
