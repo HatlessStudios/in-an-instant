@@ -19,7 +19,7 @@ public class LevelSelectButton : MonoBehaviour {
 	// Update is called once per frame
 	void OnButtonClick ()
     {
-		
+		StartCoroutine(playSoundThenLoad());
     }
 
 	IEnumerator playSoundThenLoad()
