@@ -41,9 +41,9 @@ public class NodeBuilder : MonoBehaviour {
         selectedType = (NodeType) Enum.Parse(typeof(NodeType), type);
     }
 
-    public void LockSelected(bool value)
+    public void LockSelected()
     {
-        _selected.lockPosition = value;
+        _selected.lockPosition = !_selected.lockPosition;
     }
 
     public void DeleteSelected()
