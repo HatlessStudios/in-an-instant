@@ -1914,7 +1914,7 @@ GameObject:
   - component: {fileID: 987145697}
   - component: {fileID: 987145696}
   - component: {fileID: 987145695}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
