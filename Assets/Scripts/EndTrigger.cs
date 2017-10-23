@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class EndTrigger : MonoBehaviour
 {
 	private AudioSource audioSource;
+	private AudioSource levelAudio;
 
 	// Use this for initialization
 	void Start()
     {
 		audioSource = GetComponent<AudioSource>();
+		levelAudio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -23,6 +25,7 @@ public class EndTrigger : MonoBehaviour
     {
 		if (other.gameObject.name == "Objective")
         {
+			levelAudio.Stop ();
 			StartCoroutine (playSoundThenLoad ());
 		}
 	}
