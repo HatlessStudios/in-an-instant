@@ -30,7 +30,8 @@ class SandboxNodeBuilder : NodeBuilder
     public void LockSelected()
     {
         if (_selected == null) return;
-        _selected.lockPosition = !_selected.lockPosition;
+        RelativeRigidbody body = _selected.GetComponent<RelativeRigidbody>();
+        body.lockPosition = !body.lockPosition;
     }
 
     protected new void Update()

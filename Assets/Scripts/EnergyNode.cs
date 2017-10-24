@@ -27,11 +27,6 @@ public class EnergyNode : MonoBehaviour {
         get { return _radius; }
         set { _radius = value; circle.radius = value; }
     }
-    public bool lockPosition
-    {
-        get { return _lockPosition; }
-        set { _lockPosition = value; if (body != null) body.constraints = value ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.FreezeRotation; }
-    }
     public Behaviour halo { get; private set; }
     public DrawCircle circle { get; private set; }
     public AudioSource collision { get; private set; }
@@ -44,37 +39,24 @@ public class EnergyNode : MonoBehaviour {
     private float _time;
     [SerializeField]
     private float _radius;
-    [SerializeField]
-    private bool _lockPosition;
 
     private NodeBuilder parent;
-    private Rigidbody body;
-    private Vector3 trueVelocity;
-    private float multiplier;
-    private Rigidbody bodySim;
+    private RelativeRigidbody body;
 
-    private void Start()
+    void Start()
     {
         parent = GetComponentInParent<NodeBuilder>();
-        body = GetComponent<Rigidbody>();
-        halo = (Behaviour) GetComponent("Halo");
+        body = GetComponent<RelativeRigidbody>();
+        halo = (Behaviour)GetComponent("Halo");
         circle = GetComponent<DrawCircle>();
         collision = GetComponent<AudioSource>();
-        trueVelocity = body.velocity;
-        lockPosition = _lockPosition;
-        bodySim = Instantiate(Resources.Load<GameObject>("Prefabs/PhysicsSim"), Vector3.zero, Quaternion.identity).GetComponent<Rigidbody>();
-        bodySim.transform.parent = transform;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (parent.paused || lockPosition) return;
         EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
-        trueVelocity += body.velocity - multiplier * trueVelocity;
-        double rawTimeFlow = GetTimeFlow(nodes);
-        double timeFlow = rawTimeFlow * Time.deltaTime;
-        body.AddForce(-body.velocity, ForceMode.VelocityChange);
-        bodySim.AddForce(-bodySim.velocity, ForceMode.VelocityChange);
+        double timeFlow = GetTimeFlow(nodes);
+        if (timeFlow == 0D) return;
         foreach (EnergyNode node in nodes.Where(n => n.transform.position != transform.position))
         {
             double nodeTimeFlow = timeFlow * node.GetTimeFlow(nodes);
@@ -82,11 +64,9 @@ public class EnergyNode : MonoBehaviour {
             Vector3 path = node.transform.position - transform.position;
             if (path.magnitude > node._radius) continue;
             path /= Math.Max(1F, path.sqrMagnitude);
-            bodySim.AddForce((float) (STRENGTH * _gravity * node._gravity) * path, ForceMode.Impulse);
-            bodySim.AddForce((float) (-STRENGTH * _charge * node._charge) * path, ForceMode.Impulse);
+            body.velocity += (float) (STRENGTH * (_gravity * node._gravity - _charge * node._charge)) * path;
         }
-        trueVelocity += bodySim.velocity;
-        body.AddForce((multiplier = (float) rawTimeFlow) * trueVelocity, ForceMode.VelocityChange);
+        body.timeScale = (float) timeFlow;
     }
 
     void OnMouseDown()
@@ -96,7 +76,6 @@ public class EnergyNode : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision");
         this.collision.Play();
     }
 

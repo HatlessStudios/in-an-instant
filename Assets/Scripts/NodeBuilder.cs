@@ -86,7 +86,7 @@ public class NodeBuilder : MonoBehaviour {
             EnergyNode node = Instantiate(Resources.Load<GameObject>(ENERGY_NODE_PREFAB), GetTargetedPoint(Input.mousePosition), Quaternion.identity).GetComponent<EnergyNode>();
             node.transform.parent = transform;
             node.GetComponent<Renderer>().material = GetMaterial(_selectedType);
-            node.lockPosition = _lockCreated;
+            node.GetComponent<RelativeRigidbody>().lockPosition = _lockCreated;
             created = node;
         }
         else if (Input.GetMouseButtonUp(0))
