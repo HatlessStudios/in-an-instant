@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class NodeBuilder : MonoBehaviour {
@@ -10,7 +11,7 @@ public class NodeBuilder : MonoBehaviour {
     public bool paused
     {
         get { return _paused; }
-        set { _paused = value; Time.timeScale = value ? 0 : 1; }
+        set { _paused = value; Time.timeScale = value ? 0 : 1; _pauseButton.GetComponentInChildren<Text>().text = value ? "Unpause" : "Pause"; }
     }
     public virtual EnergyNode selected
     {
@@ -33,6 +34,12 @@ public class NodeBuilder : MonoBehaviour {
         set { _globalTime = value; }
     }
 
+    public Behaviour pauseButton
+    {
+        get { return _pauseButton; }
+        set { _pauseButton = value; }
+    }
+
     [SerializeField]
     protected bool _lockCreated;
     [SerializeField]
@@ -40,6 +47,7 @@ public class NodeBuilder : MonoBehaviour {
     protected EnergyNode _selected;
     protected NodeType _selectedType = NodeType.NONE;
     protected bool _paused;
+    protected Behaviour _pauseButton;
     protected bool selectionUpdated;
     protected EnergyNode created;
     protected bool scroll;
