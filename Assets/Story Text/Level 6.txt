@@ -1,0 +1,3 @@
+fx = None
+fx_dur = None
+text = ""
