@@ -56,6 +56,7 @@ public class EnergyNode : MonoBehaviour {
     {
         EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
         double timeFlow = GetTimeFlow(nodes);
+        body.timeScale = (float) timeFlow;
         if (timeFlow == 0D) return;
         foreach (EnergyNode node in nodes.Where(n => n.transform.position != transform.position))
         {
@@ -66,7 +67,6 @@ public class EnergyNode : MonoBehaviour {
             path /= Math.Max(1F, path.sqrMagnitude);
             body.velocity += (float) (STRENGTH * (_gravity * node._gravity - _charge * node._charge)) * path;
         }
-        body.timeScale = (float) timeFlow;
     }
 
     void OnMouseDown()
