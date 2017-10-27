@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114996388487685586}
   - component: {fileID: 82903823538729128}
   - component: {fileID: 114091389757064074}
+  - component: {fileID: 135209487916209296}
   m_Layer: 0
   m_Name: EnergyNode
   m_TagString: Untagged
@@ -304,3 +305,15 @@ Halo:
     serializedVersion: 2
     rgba: 4294967295
   m_Size: 0.7
+--- !u!135 &135209487916209296
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1044945434002300}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
