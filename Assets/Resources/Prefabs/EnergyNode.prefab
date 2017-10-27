@@ -20,14 +20,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4209312701049774}
   - component: {fileID: 33067069929621004}
-  - component: {fileID: 135889238024714638}
   - component: {fileID: 23604141029243126}
   - component: {fileID: 114394222530672040}
-  - component: {fileID: 54829872091778924}
   - component: {fileID: 122446923126018422}
   - component: {fileID: 120613089636002316}
   - component: {fileID: 114996388487685586}
   - component: {fileID: 82903823538729128}
+  - component: {fileID: 114091389757064074}
   m_Layer: 0
   m_Name: EnergyNode
   m_TagString: Untagged
@@ -87,21 +86,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1044945434002300}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54829872091778924
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1044945434002300}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 1
 --- !u!82 &82903823538729128
 AudioSource:
   m_ObjectHideFlags: 1
@@ -182,6 +166,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114091389757064074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1044945434002300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a993b43a3bc0f4599299eca5eb6953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _velocity: {x: 0, y: 0, z: 0}
+  _timeScale: 1
+  _lockPosition: 0
 --- !u!114 &114394222530672040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,7 +195,6 @@ MonoBehaviour:
   _charge: 0
   _time: 0
   _radius: 1
-  _lockPosition: 0
 --- !u!114 &114996388487685586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,15 +304,3 @@ Halo:
     serializedVersion: 2
     rgba: 4294967295
   m_Size: 0.7
---- !u!135 &135889238024714638
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1044945434002300}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
