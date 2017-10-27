@@ -27,9 +27,16 @@ public class NodeBuilder : MonoBehaviour {
         get { return _lockCreated; }
         set { _lockCreated = value; }
     }
+    public double globalTime
+    {
+        get { return _globalTime; }
+        set { _globalTime = value; }
+    }
 
     [SerializeField]
     protected bool _lockCreated;
+    [SerializeField]
+    protected double _globalTime;
     protected EnergyNode _selected;
     protected NodeType _selectedType = NodeType.NONE;
     protected bool _paused;

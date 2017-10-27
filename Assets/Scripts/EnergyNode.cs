@@ -81,6 +81,6 @@ public class EnergyNode : MonoBehaviour {
 
     double GetTimeFlow(EnergyNode[] nodes)
     {
-        return nodes.Where(n => n.radius >= (n.transform.position - transform.position).magnitude).Sum(n => n._time);
+        return parent.globalTime + nodes.Where(n => n.radius >= (n.transform.position - transform.position).magnitude).Sum(n => n._time);
     }
 }
