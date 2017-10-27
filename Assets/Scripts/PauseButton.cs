@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PauseButton : MonoBehaviour {
+    public NodeBuilder nodes;
+
 	void Start () {
-        NodeBuilder builder = gameObject.scene.GetRootGameObjects().SelectMany(o => o.GetComponents<NodeBuilder>()).Single();
-        builder.pauseButton = GetComponent<Button>();
+        nodes.pauseButton = GetComponent<Button>();
 	}
 }
