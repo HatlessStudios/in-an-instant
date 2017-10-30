@@ -10,12 +10,12 @@ public class EnergyNode : MonoBehaviour {
     public float gravity
     {
         get { return _gravity; }
-        set { _gravity = value; }
+        set { _gravity = value; body.hasCollision = _gravity != 0 || _charge != 0; }
     }
     public float charge
     {
         get { return _charge; }
-        set { _charge = value; }
+        set { _charge = value; body.hasCollision = _gravity != 0 || _charge != 0; }
     }
     public float time
     {
@@ -50,9 +50,10 @@ public class EnergyNode : MonoBehaviour {
         halo = (Behaviour)GetComponent("Halo");
         circle = GetComponent<DrawCircle>();
         collision = GetComponent<AudioSource>();
+        body.listeners.Add(UpdateForces);
     }
 
-    void FixedUpdate()
+    void UpdateForces()
     {
         EnergyNode[] nodes = transform.parent.GetComponentsInChildren<EnergyNode>();
         double timeFlow = GetTimeFlow(nodes);
@@ -63,7 +64,7 @@ public class EnergyNode : MonoBehaviour {
             double nodeTimeFlow = timeFlow * node.GetTimeFlow(nodes);
             if (nodeTimeFlow == 0) continue;
             Vector3 path = node.transform.position - transform.position;
-            if (path.magnitude > node._radius) continue;
+            if (path.magnitude > node._radius/* || body.hasCollision && node.body.hasCollision && path.magnitude <= 1F*/) continue;
             path /= Math.Max(1F, path.sqrMagnitude);
             body.velocity += (float) (STRENGTH * (_gravity * node._gravity - _charge * node._charge)) * path;
         }
@@ -74,7 +75,7 @@ public class EnergyNode : MonoBehaviour {
         parent.selected = this;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         this.collision.Play();
     }

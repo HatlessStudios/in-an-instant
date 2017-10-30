@@ -34,7 +34,7 @@ class SandboxNodeBuilder : NodeBuilder
         body.lockPosition = !body.lockPosition;
     }
 
-    protected new void Update()
+    protected override void Update()
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0) && _selectedObstacle && !selectionUpdated)
         {

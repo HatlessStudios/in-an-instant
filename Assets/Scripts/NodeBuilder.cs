@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -84,7 +85,7 @@ public class NodeBuilder : MonoBehaviour {
         return new Vector3(mouse.x, mouse.y, 0);
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
         {
@@ -190,6 +191,64 @@ public class NodeBuilder : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
         {
             DeleteSelected();
+        }
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        RelativeRigidbody[] bodies = GetComponentsInChildren<RelativeRigidbody>();
+        RelativeRigidbody[] withCollisions = bodies.Where(b => b.hasCollision).ToArray();
+        foreach (RelativeRigidbody body in bodies)
+        {
+            foreach (Action listener in body.listeners)
+            {
+                listener.Invoke();
+            }
+        }
+        float timeRemaining = 1F;
+        bool collisionFound;
+        int iterations = 0;
+        do
+        {
+            foreach (RelativeRigidbody body in bodies)
+            {
+                body.CalculateVelocity(Time.fixedDeltaTime * timeRemaining);
+            }
+            collisionFound = false;
+            float collisionTime = 1F;
+            RelativeRigidbody collided1 = null, collided2 = null;
+            foreach (RelativeRigidbody body in withCollisions)
+            {
+                RelativeRigidbody foundCollided;
+                float foundTime;
+                if (body.FindCollision(withCollisions.Where(b => b != body), out foundCollided, out foundTime))
+                {
+                    if (foundTime < collisionTime)
+                    {
+                        collisionFound = true;
+                        collisionTime = foundTime;
+                        collided1 = body;
+                        collided2 = foundCollided;
+                    }
+                }
+            }
+            if (collisionTime > 0F)
+            {
+                foreach (RelativeRigidbody body in bodies)
+                {
+                    body.ApplyVelocity(collisionTime);
+                }
+                timeRemaining -= collisionTime;
+            }
+            if (collisionFound)
+            {
+                collided1.OnCollision(collided2);
+                collided2.OnCollision(collided1);
+            }
+        } while (iterations++ < 1000 && collisionFound && timeRemaining > 0F);
+        if (iterations > 1000)
+        {
+            Debug.Log("Reached maximum number of iterations");
         }
     }
 
