@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class NodeBuilder : MonoBehaviour {
     private const string ENERGY_NODE_PREFAB = "Prefabs/EnergyNode";
+    private const float KEYBOARD_SENSITIVITY = 0.5F;
 
     public bool paused
     {
@@ -191,6 +192,22 @@ public class NodeBuilder : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
         {
             DeleteSelected();
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            Camera.main.transform.position += KEYBOARD_SENSITIVITY * Vector3.up;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            Camera.main.transform.position += KEYBOARD_SENSITIVITY * Vector3.down;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            Camera.main.transform.position += KEYBOARD_SENSITIVITY * Vector3.right;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            Camera.main.transform.position += KEYBOARD_SENSITIVITY * Vector3.left;
         }
     }
 
