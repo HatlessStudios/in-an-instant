@@ -35,7 +35,6 @@ public class NodeBuilder : MonoBehaviour {
         get { return _globalTime; }
         set { _globalTime = value; }
     }
-
     public Behaviour pauseButton
     {
         get { return _pauseButton; }

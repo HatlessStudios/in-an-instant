@@ -181,6 +181,7 @@ MonoBehaviour:
   _velocity: {x: 0, y: 0, z: 0}
   _timeScale: 1
   _lockPosition: 0
+  _hasCollision: 1
 --- !u!114 &114394222530672040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,7 +294,7 @@ LineRenderer:
     alignment: 0
     textureMode: 0
   m_UseWorldSpace: 0
-  m_Loop: 0
+  m_Loop: 1
 --- !u!122 &122446923126018422
 Halo:
   m_ObjectHideFlags: 1

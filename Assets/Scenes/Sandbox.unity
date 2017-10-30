@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 90433800}
   - component: {fileID: 90433799}
   - component: {fileID: 90433798}
+  - component: {fileID: 90433801}
   m_Layer: 5
   m_Name: Lock Button
   m_TagString: Untagged
@@ -448,6 +449,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 90433796}
+--- !u!114 &90433801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 90433796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f830e676cc608459954723b320b1a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyNodes: {fileID: 1480049825}
 --- !u!1 &108244212
 GameObject:
   m_ObjectHideFlags: 0

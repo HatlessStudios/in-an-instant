@@ -14,12 +14,6 @@ public class EndTrigger : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 		levelAudio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
 	}
-	
-	// Update is called once per frame
-	void Update()
-    {
-		
-	}
 
 	void OnTriggerEnter(Collider other)
     {

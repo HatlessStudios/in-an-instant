@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
-class SandboxNodeBuilder : NodeBuilder
+public class SandboxNodeBuilder : NodeBuilder
 {
     private const string OBSTACLE_PREFAB = "Prefabs/Obstacle";
 
@@ -23,15 +24,21 @@ class SandboxNodeBuilder : NodeBuilder
         get { return _selectedType; }
         set { _selectedType = value; ChangeSelected(null); _selectedObstacle = false; }
     }
+    public Behaviour lockButton
+    {
+        get { return _lockButton; }
+        set { _lockButton = value; }
+    }
 
     private bool _selectedObstacle;
+    protected Behaviour _lockButton;
     private Obstacle createdObstacle;
 
     public void LockSelected()
     {
         if (_selected == null) return;
         RelativeRigidbody body = _selected.GetComponent<RelativeRigidbody>();
-        body.lockPosition = !body.lockPosition;
+        _lockButton.GetComponentInChildren<Text>().text = (body.lockPosition = !body.lockPosition) ? "Unlock" : "Lock";
     }
 
     protected override void Update()
