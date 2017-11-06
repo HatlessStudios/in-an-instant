@@ -62,7 +62,6 @@ public class EnergyNode : MonoBehaviour {
         foreach (EnergyNode node in nodes.Where(n => n.transform.position != transform.position))
         {
             double nodeTimeFlow = timeFlow * node.GetTimeFlow(nodes);
-            if (nodeTimeFlow == 0) continue;
             Vector3 path = node.transform.position - transform.position;
             if (path.magnitude > node._radius/* || body.hasCollision && node.body.hasCollision && path.magnitude <= 1F*/) continue;
             path /= Math.Max(1F, path.sqrMagnitude);

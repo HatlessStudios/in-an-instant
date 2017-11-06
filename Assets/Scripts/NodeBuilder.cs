@@ -213,7 +213,6 @@ public class NodeBuilder : MonoBehaviour {
     protected virtual void FixedUpdate()
     {
         RelativeRigidbody[] bodies = GetComponentsInChildren<RelativeRigidbody>();
-        RelativeRigidbody[] withCollisions = bodies.Where(b => b.hasCollision).ToArray();
         foreach (RelativeRigidbody body in bodies)
         {
             foreach (Action listener in body.listeners)
@@ -221,6 +220,8 @@ public class NodeBuilder : MonoBehaviour {
                 listener.Invoke();
             }
         }
+        bodies = bodies.Where(b => b.timeScale != 0).ToArray();
+        RelativeRigidbody[] withCollisions = bodies.Where(b => b.hasCollision).ToArray();
         float timeRemaining = 1F;
         bool collisionFound;
         int iterations = 0;
@@ -233,6 +234,7 @@ public class NodeBuilder : MonoBehaviour {
             collisionFound = false;
             float collisionTime = 1F;
             RelativeRigidbody collided1 = null, collided2 = null;
+            UnityEngine.Profiling.Profiler.BeginSample("FindCollisions");
             foreach (RelativeRigidbody body in withCollisions)
             {
                 RelativeRigidbody foundCollided;
@@ -248,6 +250,7 @@ public class NodeBuilder : MonoBehaviour {
                     }
                 }
             }
+            UnityEngine.Profiling.Profiler.EndSample();
             if (collisionTime > 0F)
             {
                 foreach (RelativeRigidbody body in bodies)

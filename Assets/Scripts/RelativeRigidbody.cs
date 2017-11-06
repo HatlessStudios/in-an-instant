@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RelativeRigidbody : MonoBehaviour {
+    private const float COLLISION_LIMIT = 1e-6F;
+
     public Vector3 velocity
     {
         get { return _velocity = nextVelocity; }
@@ -41,6 +43,7 @@ public class RelativeRigidbody : MonoBehaviour {
     private Vector3 scaledVelocity;
     private Vector3 nextVelocity;
     private Vector3 antiClipping;
+    private List<RelativeRigidbody> clipping = new List<RelativeRigidbody>();
 
     public void CalculateVelocity(float deltaTime)
     {
@@ -51,6 +54,7 @@ public class RelativeRigidbody : MonoBehaviour {
     {
         transform.position += collisionTime * scaledVelocity + antiClipping;
         antiClipping = Vector3.zero;
+        clipping.Clear();
     }
 
     public void OnCollision(RelativeRigidbody body)
@@ -59,45 +63,40 @@ public class RelativeRigidbody : MonoBehaviour {
         nextVelocity = _velocity - .5F * Vector3.Project(_velocity - body._velocity, transform.position - body.transform.position);
     }
 
-    public void OnClipping(RelativeRigidbody body)
-    {
-        Vector3 dp = transform.position - body.transform.position;
-        antiClipping += 0.5F * (1F - dp.magnitude) * dp.normalized;
-    }
-
     public bool FindCollision(IEnumerable<RelativeRigidbody> bodies, out RelativeRigidbody collidedBody, out float collisionTime)
     {
         collidedBody = null;
         collisionTime = 1F;
-        if (timeScale == 0) return false;
         foreach (RelativeRigidbody body in bodies)
         {
-            if (body.timeScale == 0) continue;
             Vector3 dp = transform.position - body.transform.position;
             Vector3 dv = scaledVelocity - body.scaledVelocity;
             float dpv = Vector3.Dot(dp, dv);
             if (dp.sqrMagnitude <= 1F && dpv < 1F)
             {
-                OnClipping(body);
-                body.OnClipping(this);
+                Vector3 adjustment = .5F * (1F - dp.magnitude) * dp.normalized;
+                antiClipping += adjustment;
+                body.antiClipping -= adjustment;
+                clipping.Add(body);
+                body.clipping.Add(this);
                 continue;
             }
-            if (dv == Vector3.zero) continue;
+            if (dv == Vector3.zero || clipping.Contains(body)) continue;
             double discriminant = dpv * dpv - 4D * dv.sqrMagnitude * (dp.sqrMagnitude - 1D);
             if (discriminant >= 0D)
             {
                 discriminant = Math.Sqrt(discriminant);
-                float collision1 = (float) (-dpv + discriminant) / 2F / dv.magnitude;
-                float collision2 = (float) (-dpv - discriminant) / 2F / dv.magnitude;
+                float collision1 = (float)(-dpv + discriminant) / 2F / dv.magnitude;
+                float collision2 = (float)(-dpv - discriminant) / 2F / dv.magnitude;
                 if (collision1 >= 0F && collision1 <= collisionTime)
                 {
                     collidedBody = body;
-                    collisionTime = Math.Max(0F, collision1);
+                    collisionTime = collision1;
                 }
                 if (collision2 >= 0F && collision2 <= collisionTime)
                 {
                     collidedBody = body;
-                    collisionTime = Math.Max(0F, collision2);
+                    collisionTime = collision2;
                 }
             }
         }
